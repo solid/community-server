@@ -85,13 +85,10 @@ describe('ConversionUtil', (): void => {
   describe('#matchesMediaType', (): void => {
     it('matches all possible media types.', async(): Promise<void> => {
       expect(matchesMediaType('*/*', 'text/turtle')).toBeTruthy();
-      expect(matchesMediaType('text/*', '*/*')).toBeTruthy();
       expect(matchesMediaType('text/*', 'text/turtle')).toBeTruthy();
-      expect(matchesMediaType('text/plain', 'text/*')).toBeTruthy();
       expect(matchesMediaType('text/turtle', 'text/turtle')).toBeTruthy();
 
-      expect(matchesMediaType('text/*', 'application/*')).toBeFalsy();
-      expect(matchesMediaType('text/plain', 'application/*')).toBeFalsy();
+      expect(matchesMediaType('application/*', 'text/plain')).toBeFalsy();
       expect(matchesMediaType('text/plain', 'text/turtle')).toBeFalsy();
     });
   });

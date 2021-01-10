@@ -56,30 +56,31 @@ string[] {
 }
 
 /**
- * Checks if the given two media types/ranges match each other.
+ * Checks if the pattern matches the media type.
  * Takes wildcards into account.
- * @param mediaA - Media type to match.
- * @param mediaB - Media type to match.
+ * @param type - Media type to match.
+ * @param type - Media type to match.
  *
- * @returns True if the media type patterns can match each other.
+ * @returns True if the pattern matches
  */
-export function matchesMediaType(mediaA: string, mediaB: string): boolean {
-  if (mediaA === mediaB) {
+export function matchesMediaType(pattern: string, type: string): boolean {
+  if (pattern === type) {
     return true;
   }
 
-  const [ typeA, subTypeA ] = mediaA.split('/');
-  const [ typeB, subTypeB ] = mediaB.split('/');
-  if (typeA === '*' || typeB === '*') {
+  const [ patternMain, patternSub ] = pattern.split('/');
+  if (patternMain === '*') {
     return true;
   }
-  if (typeA !== typeB) {
+
+  const [ typeMain, typeSub ] = type.split('/');
+  if (patternMain !== typeMain) {
     return false;
   }
-  if (subTypeA === '*' || subTypeB === '*') {
+  if (patternSub === '*') {
     return true;
   }
-  return subTypeA === subTypeB;
+  return typeSub === patternSub;
 }
 
 /**

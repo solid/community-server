@@ -52,25 +52,25 @@ export class ChainedConverter extends TypedRepresentationConverter {
    */
   protected async getMatchingType(left: TypedRepresentationConverter, right: TypedRepresentationConverter):
   Promise<string> {
-    const leftTypes = await left.getOutputTypes();
-    const rightTypes = await right.getInputTypes();
+    const inputTypes = await right.getInputTypes();
+    const outputTypes = await left.getOutputTypes();
     let bestMatch: { type: string; weight: number } = { type: 'invalid', weight: 0 };
 
     // Try to find the matching type with the best weight
-    const leftKeys = Object.keys(leftTypes);
-    const rightKeys = Object.keys(rightTypes);
-    for (const leftType of leftKeys) {
-      const leftWeight = leftTypes[leftType];
-      if (leftWeight <= bestMatch.weight) {
+    const inputKeys = Object.keys(inputTypes);
+    const outputKeys = Object.keys(outputTypes);
+    for (const outputType of outputKeys) {
+      const outputWeight = outputTypes[outputType];
+      if (outputWeight <= bestMatch.weight) {
         continue;
       }
-      for (const rightType of rightKeys) {
-        const rightWeight = rightTypes[rightType];
-        const weight = leftWeight * rightWeight;
-        if (weight > bestMatch.weight && matchesMediaType(leftType, rightType)) {
-          bestMatch = { type: leftType, weight };
+      for (const inputType of inputKeys) {
+        const inputWeight = inputTypes[inputType];
+        const weight = outputWeight * inputWeight;
+        if (weight > bestMatch.weight && matchesMediaType(inputType, outputType)) {
+          bestMatch = { type: outputType, weight };
           if (weight === 1) {
-            this.logger.debug(`${bestMatch.type} is an exact match between ${leftKeys} and ${rightKeys}`);
+            this.logger.debug(`${bestMatch.type} is an exact match between ${outputKeys} and ${inputKeys}`);
             return bestMatch.type;
           }
         }
@@ -78,11 +78,11 @@ export class ChainedConverter extends TypedRepresentationConverter {
     }
 
     if (bestMatch.weight === 0) {
-      this.logger.warn(`No match found between ${leftKeys} and ${rightKeys}`);
-      throw new Error(`No match found between ${leftKeys} and ${rightKeys}`);
+      this.logger.warn(`No match found between ${outputKeys} and ${inputKeys}`);
+      throw new Error(`No match found between ${outputKeys} and ${inputKeys}`);
     }
 
-    this.logger.debug(`${bestMatch.type} is the best match between ${leftKeys} and ${rightKeys}`);
+    this.logger.debug(`${bestMatch.type} is the best match between ${outputKeys} and ${inputKeys}`);
     return bestMatch.type;
   }
 }

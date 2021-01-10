@@ -64,8 +64,8 @@ export class ContentTypeReplacer extends RepresentationConverter {
    */
   private getReplacementType(contentType = 'unknown', preferred: ValuePreferences = {}): string {
     const supported = Object.keys(this.contentTypeMap)
-      .filter((type): boolean => matchesMediaType(contentType, type))
-      .map((type): ValuePreferences => this.contentTypeMap[type]);
+      .filter((inputType): boolean => matchesMediaType(inputType, contentType))
+      .map((inputType): ValuePreferences => this.contentTypeMap[inputType]);
     const matching = matchingMediaTypes(preferred, Object.assign({} as ValuePreferences, ...supported));
     if (matching.length === 0) {
       throw new NotImplementedHttpError(`Cannot convert from ${contentType} to ${Object.keys(preferred)}`);
