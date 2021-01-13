@@ -1,7 +1,7 @@
-import type { AsyncHandler } from '../../../src/util/AsyncHandler';
 import { BadRequestHttpError } from '../../../src/util/errors/BadRequestHttpError';
 import { HttpError } from '../../../src/util/errors/HttpError';
-import { WaterfallHandler } from '../../../src/util/WaterfallHandler';
+import type { AsyncHandler } from '../../../src/util/handlers/AsyncHandler';
+import { WaterfallHandler } from '../../../src/util/handlers/WaterfallHandler';
 import { StaticAsyncHandler } from '../../util/StaticAsyncHandler';
 
 describe('A WaterfallHandler', (): void => {
@@ -38,7 +38,7 @@ describe('A WaterfallHandler', (): void => {
     it('can handle data if a handler supports it.', async(): Promise<void> => {
       const handler = new WaterfallHandler([ handlerFalse, handlerTrue ]);
 
-      await expect(handler.canHandle(null)).resolves.toBeUndefined();
+      await expect(handler.canHandle(null)).resolves.toEqual(handlerTrue);
     });
 
     it('can not handle data if no handler supports it.', async(): Promise<void> => {

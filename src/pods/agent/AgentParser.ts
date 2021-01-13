@@ -1,5 +1,5 @@
 import type { Representation } from '../../ldp/representation/Representation';
-import { AsyncHandler } from '../../util/AsyncHandler';
+import { AsyncHandler } from '../../util/handlers/AsyncHandler';
 import type { Agent } from './Agent';
 
 /**

@@ -1,6 +1,6 @@
 import type { Representation } from '../../ldp/representation/Representation';
 import type { ResourceIdentifier } from '../../ldp/representation/ResourceIdentifier';
-import { AsyncHandler } from '../../util/AsyncHandler';
+import { AsyncHandler } from '../../util/handlers/AsyncHandler';
 import type { ResourceStore } from '../ResourceStore';
 
 /**

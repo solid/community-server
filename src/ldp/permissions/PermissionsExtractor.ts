@@ -1,4 +1,4 @@
-import { AsyncHandler } from '../../util/AsyncHandler';
+import { AsyncHandler } from '../../util/handlers/AsyncHandler';
 import type { Operation } from '../operations/Operation';
 import type { PermissionSet } from './PermissionSet';
 

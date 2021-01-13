@@ -1,4 +1,4 @@
-import { AsyncHandler } from '../util/AsyncHandler';
+import { AsyncHandler } from '../util/handlers/AsyncHandler';
 import type { HttpRequest } from './HttpRequest';
 import type { HttpResponse } from './HttpResponse';
 

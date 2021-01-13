@@ -1,5 +1,5 @@
 import type { HttpRequest } from '../../server/HttpRequest';
-import { AsyncHandler } from '../../util/AsyncHandler';
+import { AsyncHandler } from '../../util/handlers/AsyncHandler';
 import type { ResourceIdentifier } from '../representation/ResourceIdentifier';
 
 /**

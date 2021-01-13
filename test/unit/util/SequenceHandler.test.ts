@@ -1,5 +1,5 @@
-import type { AsyncHandler } from '../../../src/util/AsyncHandler';
-import { SequenceHandler } from '../../../src/util/SequenceHandler';
+import type { AsyncHandler } from '../../../src/util/handlers/AsyncHandler';
+import { SequenceHandler } from '../../../src/util/handlers/SequenceHandler';
 
 describe('A SequenceHandler', (): void => {
   const handlers: jest.Mocked<AsyncHandler<string, string>>[] = [

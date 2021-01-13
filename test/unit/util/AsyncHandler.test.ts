@@ -1,4 +1,4 @@
-import { AsyncHandler } from '../../../src/util/AsyncHandler';
+import { AsyncHandler } from '../../../src/util/handlers/AsyncHandler';
 import { StaticAsyncHandler } from '../../util/StaticAsyncHandler';
 
 describe('An AsyncHandler', (): void => {

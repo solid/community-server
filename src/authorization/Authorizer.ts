@@ -1,7 +1,7 @@
 import type { Credentials } from '../authentication/Credentials';
 import type { PermissionSet } from '../ldp/permissions/PermissionSet';
 import type { ResourceIdentifier } from '../ldp/representation/ResourceIdentifier';
-import { AsyncHandler } from '../util/AsyncHandler';
+import { AsyncHandler } from '../util/handlers/AsyncHandler';
 
 /**
  * Verifies if the given credentials have access to the given permissions on the given resource.
