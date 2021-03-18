@@ -20,7 +20,9 @@
     "files-scs:config/presets/static.json",
     "files-scs:config/presets/storage/backend/storage-filesystem-subdomains.json",
     "files-scs:config/presets/storage-wrapper.json",
-    "files-scs:config/presets/cli-params.json"
+    "files-scs:config/presets/cli-params.json",
+    "files-scs:config/presets/identity/solid-identity-provider.json",
+    "files-scs:config/presets/identity/email-password-interaction-policy.json"
   ],
   "@graph": [
     {
