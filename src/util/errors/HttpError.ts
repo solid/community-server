@@ -10,10 +10,12 @@ export interface HttpErrorOptions {
  * A class for all errors that could be thrown by Solid.
  * All errors inheriting from this should fix the status code thereby hiding the HTTP internals from other components.
  */
-export class HttpError extends Error {
+export class HttpError extends Error implements HttpErrorOptions {
   protected static readonly statusCode: number;
   public readonly statusCode: number;
-  public readonly options: HttpErrorOptions;
+  public readonly cause?: unknown;
+  public readonly errorCode?: string;
+  public readonly details?: NodeJS.Dict<unknown>;
 
   /**
    * Creates a new HTTP error. Subclasses should call this with their fixed status code.
@@ -26,7 +28,9 @@ export class HttpError extends Error {
     super(message);
     this.statusCode = statusCode;
     this.name = name;
-    this.options = options;
+    this.cause = options.cause;
+    this.errorCode = options.errorCode;
+    this.details = options.details;
   }
 
   public static isInstance(error: any): error is HttpError {

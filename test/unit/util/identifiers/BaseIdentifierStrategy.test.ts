@@ -23,7 +23,7 @@ describe('A BaseIdentifierStrategy', (): void => {
     expect((): any => strategy.getParentContainer({ path: '/unsupported' }))
       .toThrow('The identifier /unsupported is outside the configured identifier space.');
     expect((): any => strategy.getParentContainer({ path: '/unsupported' }))
-      .toThrow(expect.objectContaining({ options: { errorCode: 'E0001', details: { path: '/unsupported' }}}));
+      .toThrow(expect.objectContaining({ errorCode: 'E0001', details: { path: '/unsupported' }}));
   });
 
   it('errors when attempting to get the parent of a root container.', async(): Promise<void> => {
