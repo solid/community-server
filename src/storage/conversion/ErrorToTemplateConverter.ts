@@ -1,3 +1,4 @@
+import assert from 'assert';
 import { promises as fsPromises } from 'fs';
 import arrayifyStream from 'arrayify-stream';
 import { BasicRepresentation } from '../../ldp/representation/BasicRepresentation';
@@ -57,10 +58,11 @@ export class ErrorToTemplateConverter extends TypedRepresentationConverter {
 
   private async getErrorCodeMessage(error: Error): Promise<string | undefined> {
     if (HttpError.isInstance(error) && error.errorCode) {
-      const filePath = joinFilePath(this.descriptions, `${error.errorCode}${this.extension}`);
       let template: string;
       try {
-        template = await fsPromises.readFile(filePath, 'utf8');
+        const fileName = `${error.errorCode}${this.extension}`;
+        assert(/^[\w.]+$/u.test(fileName), 'Invalid error template name');
+        template = await fsPromises.readFile(joinFilePath(this.descriptions, fileName), 'utf8');
       } catch {
         // In case no template is found we still want to convert
         return;
