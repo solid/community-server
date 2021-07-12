@@ -19,8 +19,20 @@
       "@type": "ExtensionBasedMapper",
       "base": { "@id": "urn:solid-server:default:variable:baseUrl" },
       "rootFilepath": { "@id": "urn:solid-server:default:variable:rootFilePath" },
-      "overrideTypes_acl": "text/turtle",
-      "overrideTypes_meta": "text/turtle"
+      "overrideTypes": [
+        {
+          "ExtensionBasedMapper:_overrideTypes_key": "acl",
+          "ExtensionBasedMapper:_overrideTypes_value": "text/turtle"
+        },
+        {
+          "ExtensionBasedMapper:_overrideTypes_key": "meta",
+          "ExtensionBasedMapper:_overrideTypes_value": "text/turtle"
+        },
+        {
+          "ExtensionBasedMapper:_overrideTypes_key": "trig",
+          "ExtensionBasedMapper:_overrideTypes_value": "application/trig"
+        }
+      ]
     }
   ]
 }

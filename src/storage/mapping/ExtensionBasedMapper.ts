@@ -1,7 +1,7 @@
 import { promises as fsPromises } from 'fs';
 import * as mime from 'mime-types';
 import type { ResourceIdentifier } from '../../ldp/representation/ResourceIdentifier';
-import { TEXT_TURTLE } from '../../util/ContentTypes';
+import { APPLICATION_TRIG, TEXT_TURTLE } from '../../util/ContentTypes';
 import { NotImplementedHttpError } from '../../util/errors/NotImplementedHttpError';
 import { joinFilePath, getExtension } from '../../util/PathUtil';
 import { BaseFileIdentifierMapper } from './BaseFileIdentifierMapper';
@@ -9,10 +9,19 @@ import type { FileIdentifierMapperFactory, ResourceLink } from './FileIdentifier
 
 export class ExtensionBasedMapper extends BaseFileIdentifierMapper {
   private readonly types: Record<string, any>;
+  private readonly mimeFallback: Record<string, string>;
 
-  public constructor(base: string, rootFilepath: string, overrideTypes = { acl: TEXT_TURTLE, meta: TEXT_TURTLE }) {
+  public constructor(
+    base: string,
+    rootFilepath: string,
+    overrideTypes: Record<string, string> = { acl: TEXT_TURTLE, meta: TEXT_TURTLE, trig: APPLICATION_TRIG },
+  ) {
     super(base, rootFilepath);
     this.types = { ...mime.types, ...overrideTypes };
+    this.mimeFallback = {};
+    for (const [ extension, contentType ] of Object.entries(overrideTypes)) {
+      this.mimeFallback[contentType] = extension;
+    }
   }
 
   protected async mapUrlToDocumentPath(identifier: ResourceIdentifier, filePath: string, contentType?: string):
@@ -42,7 +51,7 @@ export class ExtensionBasedMapper extends BaseFileIdentifierMapper {
     // If the extension of the identifier matches a different content-type than the one that is given,
     // we need to add a new extension to match the correct type.
     } else if (contentType !== await this.getContentTypeFromPath(filePath)) {
-      const extension = mime.extension(contentType);
+      const extension = mime.extension(contentType) || this.mimeFallback[contentType];
       if (!extension) {
         this.logger.warn(`No extension found for ${contentType}`);
         throw new NotImplementedHttpError(`Unsupported content type ${contentType}`);
